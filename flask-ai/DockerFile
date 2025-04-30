@@ -1,0 +1,19 @@
+# GPU destekli bir temel imaj
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
+
+# Çalışma klasörü
+WORKDIR /app
+
+# Gerekli kütüphaneler
+COPY requirements.txt .
+RUN apt update && apt install -y python3-pip git
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Tüm proje dosyalarını kopyala
+COPY . .
+
+# Flask API portunu aç
+EXPOSE 5000
+
+# Uygulama başlatma komutu
+CMD ["python3", "app.py"]

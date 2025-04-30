@@ -1,0 +1,223 @@
+/* Genel ayarlar */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(to bottom right, #a7c5eb, #7ed6a4, #a29bfe);
+  min-height: 100vh;
+}
+
+/* Ana container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Kart (form kutuları) */
+.card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Başlık */
+h1 {
+  font-size: 28px;
+  color: #6c5ce7;
+  margin-bottom: 20px;
+}
+
+/* Input grubu */
+form {
+  width: 100%;
+}
+
+form label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #636e72;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Sadece form butonları geniş olur */
+form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #74b9ff, #a29bfe);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: linear-gradient(to right, #55efc4, #81ecec);
+}
+
+/* Geri butonu */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6c5ce7;
+  cursor: pointer;
+}
+
+/* Sayfalar arası alt link */
+.alt-link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #636e72;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.alt-link:hover {
+  color: #0984e3;
+}
+
+/* Chat Sayfası */
+
+.chat-card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  height: 80vh;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: linear-gradient(to right, #74b9ff, #a29bfe);
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 70%;
+  font-size: 15px;
+}
+
+.message.user {
+  background: #81ecec;
+  align-self: flex-end;
+  color: #2d3436;
+}
+
+.message.bot {
+  background: #a29bfe;
+  align-self: flex-start;
+  color: white;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+  gap: 8px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  color: #2d3436;
+  outline: none;
+}
+
+.chat-input button {
+  background: linear-gradient(to right, #55efc4, #81ecec);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.chat-input button:hover {
+  background: linear-gradient(to right, #74b9ff, #a29bfe);
+}
+
+/* 🎯 İlgi Alanı Seçim Sayfası İçin */
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.interest-item {
+  padding: 12px;
+  background-color: #f1f2f6;
+  color: #2d3436;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+}
+
+.interest-item:hover {
+  background-color: #dfe6e9;
+}
+
+.interest-item.selected {
+  background: linear-gradient(to right, #74b9ff, #a29bfe);
+  color: white;
+  border-color: #a29bfe;
+}
