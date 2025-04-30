@@ -1,0 +1,10 @@
+# Ortak ignore kuralları
+node_modules/
+.env
+*.pyc
+__pycache__/
+.cache/
+
+# Özel env dosyaları
+backend-node/.env
+flask-ai/.env
