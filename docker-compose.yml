@@ -51,5 +51,11 @@ services:
     environment:
       REACT_APP_API_URL: http://localhost:5001
 
+   adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
 volumes:
   db_data:
