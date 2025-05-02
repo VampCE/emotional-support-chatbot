@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // veritabanı bağlantımız
+const db = require('../db'); // Doğrudan pool (promise destekli)
 
-// ✅ İlgi alanlarını kaydetme endpointi
 router.post('/interests', async (req, res) => {
   const { email, interests } = req.body;
 
@@ -11,18 +10,21 @@ router.post('/interests', async (req, res) => {
   }
 
   try {
-    // Önce kullanıcı ID'sini bulalım
-    const [rows] = await db.promise().query("SELECT id FROM users WHERE email = ?", [email]);
+    // ✅ Artık db.promise() değil, doğrudan db.query() kullanabilirsin
+    const [rows] = await db.query("SELECT id FROM users WHERE email = ?", [email]);
     if (rows.length === 0) {
       return res.status(404).send("Kullanıcı bulunamadı.");
     }
 
     const userId = rows[0].id;
 
-    // Seçilen tüm ilgi alanlarını kaydedelim
+    // Eski ilgi alanlarını sil
+    await db.query("DELETE FROM user_interests WHERE user_id = ?", [userId]);
+
+    // Yeni ilgi alanlarını ekle
     for (const interest of interests) {
-      await db.promise().query(
-        "INSERT INTO interests (user_id, interest_name) VALUES (?, ?)",
+      await db.query(
+        "INSERT INTO user_interests (user_id, interest) VALUES (?, ?)",
         [userId, interest]
       );
     }

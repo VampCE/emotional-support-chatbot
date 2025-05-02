@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../services/api"; // Eğer api.js kullandıysan
-import './styles.css'; // Ortak CSS dosyamız
+import { loginUser, fetchUserInterests } from "../services/api";
+import './styles.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,29 +12,43 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const result = await loginUser(username, password); // Backend'e istek
-      console.log("Backend cevabı:", result);
-
+      const result = await loginUser(username, password);
       alert(result); // Giriş başarılı
-      navigate("/chat"); // Sohbet ekranına yönlendir
+
+      // ✅ E-postayı localStorage'a kaydet
+      localStorage.setItem("email", username);
+
+      // ✅ İlgi alanı var mı kontrol et
+      const interests = await fetchUserInterests(username);
+      if (interests.hasInterests) {
+        navigate("/chat");
+      } else {
+        navigate("/interests");
+      }
+
     } catch (error) {
-      console.error("Login  Error:", error);
-      alert("Server Error!"); // Hata varsa bildir
+      console.error("Login Error:", error);
+
+      if (error.message.includes("kullanıcı bulunamadı")) {
+        alert("⚠️ Böyle bir kullanıcı bulunamadı.");
+      } else if (error.message.includes("Şifre hatalı")) {
+        alert("🔑 Şifre hatalı!");
+      } else if (error.message.includes("doğrulayın")) {
+        alert("📧 Lütfen önce e-posta adresinizi doğrulayın.");
+      } else {
+        alert("❌ Sunucu hatası.");
+      }
     }
   };
 
   return (
     <div className="container">
-      <button 
-        className="back-button" 
-        onClick={() => navigate('/')} 
-        title="Back to Main Page "
-      >
+      <button className="back-button" onClick={() => navigate('/')}>
         &#8592;
       </button>
 
       <div className="card">
-        <h1>Login </h1>
+        <h1>Login</h1>
         <form onSubmit={handleLogin}>
           <label htmlFor="username">E-mail:</label>
           <input
@@ -52,13 +66,14 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Login </button>
+          <button type="submit">Login</button>
         </form>
 
-        <div 
-          className="alt-link"
-          onClick={() => navigate('/register')}
-        >
+        <div className="alt-link" onClick={() => navigate('/forgot-password')}>
+          Forgot your password?
+        </div>
+
+        <div className="alt-link" onClick={() => navigate('/register')}>
           Don't you have an account? Sign up!
         </div>
       </div>

@@ -221,3 +221,42 @@ form button:hover {
   color: white;
   border-color: #a29bfe;
 }
+/* Log Out butonu */
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(to right, #ff7675, #d63031);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background: linear-gradient(to right, #ff6b6b, #c0392b);
+}
+.change-password-button {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: linear-gradient(to right, #6c5ce7, #341f97);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.change-password-button:hover {
+  background: linear-gradient(to right, #a29bfe, #5f27cd);
+}

@@ -5,6 +5,11 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import ChatPage from './components/ChatPage';
 import InterestsPage from "./components/InterestsPage";
+import ForgotPasswordPage from './components/ForgotPasswordPage';
+import ResetPasswordPage from './components/ResetPasswordPage';
+import VerifyPage from "./components/VerifyPage";
+import VerifyInfoPage from "./components/VerifyInfoPage";
+import ChangePasswordPage from "./components/ChangePasswordPage";
 import './components/styles.css';
 
 
@@ -17,6 +22,11 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/interests" element={<InterestsPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/verify/:token" element={<VerifyPage />} />
+        <Route path="/verify-info" element={<VerifyInfoPage />} />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
       </Routes>
     </Router>
   );

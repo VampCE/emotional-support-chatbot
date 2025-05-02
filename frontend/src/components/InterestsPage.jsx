@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { submitInterests } from "../services/api";
 import "./styles.css";
 
 const interestOptions = [
-    "Mind",         // Mental health, psychology
-    "Fitness",      // Sports & movement
-    "Music",        // All music types
-    "Movies",       // Films & series
-    "Career",       // Job & goals
-    "Growth",       // Personal development
-    "Style",        // Fashion & trends
-    "Nature",       // Flowers & outdoors
-    "Tech",         // Science & gadgets
-    "Love",         // Relationships
-    "Social",       // Confidence, anxiety
-    "Other"         // Not listed
-  ];
+  "Mind", "Fitness", "Music", "Movies", "Career", "Growth",
+  "Style", "Nature", "Tech", "Love", "Social", "Other"
+];
 
 const InterestsPage = () => {
   const navigate = useNavigate();
@@ -25,9 +14,8 @@ const InterestsPage = () => {
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("email");
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
+    console.log("📩 Email geldi mi:", storedEmail);
+    if (storedEmail) setEmail(storedEmail);
   }, []);
 
   const toggleInterest = (interest) => {
@@ -41,18 +29,29 @@ const InterestsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      if (!email || selected.length === 0) {
-        alert("E-posta ve en az bir ilgi alanı gerekli.");
-        return;
-      }
+    if (!email || selected.length === 0) {
+      alert("E-posta ve en az bir ilgi alanı gerekli.");
+      return;
+    }
 
-      await submitInterests(email, selected);
-      alert("İlgi alanların kaydedildi!");
-      navigate("/chat");
+    try {
+      const response = await fetch("http://localhost:5001/api/interests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, interests: selected }),
+      });
+
+      const result = await response.text();
+
+      if (response.ok) {
+        alert("✅ Your interests have been saved!");
+        navigate("/chat");
+      } else {
+        alert("❌ Registration failed: " + result);
+      }
     } catch (error) {
-      console.error("İlgi alanı gönderme hatası:", error);
-      alert("Bir hata oluştu!");
+      console.error("Error sending interest:", error);
+      alert("❌ A server error occurred.");
     }
   };
 
@@ -61,7 +60,7 @@ const InterestsPage = () => {
       <div className="card">
         <h1 style={{ color: "#6c5ce7" }}>Help us to know you better</h1>
         <p style={{ color: "#636e72", marginBottom: "20px" }}>
-          lets choose your interest
+          Let's choose your interests
         </p>
 
         <div className="interests-grid">
@@ -77,7 +76,7 @@ const InterestsPage = () => {
         </div>
 
         <button onClick={handleSubmit} style={{ marginTop: "20px" }}>
-          done
+          Done
         </button>
       </div>
     </div>

@@ -5,7 +5,7 @@ import "./styles.css";
 const ChatPage = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi , how can I help you? 😊" }
+    { sender: "bot", text: "Hi, how can I help you? 😊" }
   ]);
   const [newMessage, setNewMessage] = useState('');
 
@@ -20,38 +20,49 @@ const ChatPage = () => {
     setNewMessage('');
   };
 
+  const handleLogout = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="container">
-      <button
-        className="back-button"
-        onClick={() => navigate('/')}
-        title="Anasayfaya dön"
-      >
-        &#8592;
-      </button>
+    <div>
+      {/* Üst sağ köşe: Log Out ve Change Password */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', padding: '10px 20px' }}>
+        <button className="logout-button" onClick={handleLogout}>
+          🚪 Log Out
+        </button>
+        <button
+          className="logout-button"
+          onClick={() => navigate("/change-password")}
+        >
+          🔒 Change Password
+        </button>
+      </div>
 
-      <div className="chat-card">
-        <div className="chat-header">
-          💬 Duygusal Destek Botu
+      <div className="container">
+        <div className="chat-card">
+          <div className="chat-header">
+            💬 Your Emotional Support Bot
+          </div>
+
+          <div className="chat-messages">
+            {messages.map((msg, index) => (
+              <div key={index} className={`message ${msg.sender}`}>
+                {msg.text}
+              </div>
+            ))}
+          </div>
+
+          <form className="chat-input" onSubmit={handleSend}>
+            <input
+              type="text"
+              placeholder="Type your message..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <button type="submit">➤</button>
+          </form>
         </div>
-
-        <div className="chat-messages">
-          {messages.map((msg, index) => (
-            <div key={index} className={`message ${msg.sender}`}>
-              {msg.text}
-            </div>
-          ))}
-        </div>
-
-        <form className="chat-input" onSubmit={handleSend}>
-          <input
-            type="text"
-            placeholder="Mesajınızı yazın..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-          />
-          <button type="submit">➤</button>
-        </form>
       </div>
     </div>
   );

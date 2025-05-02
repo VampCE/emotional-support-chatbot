@@ -9,28 +9,36 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:5001/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: username, password }),
       });
-
+  
       const result = await response.text();
       console.log("Backend cevabı:", result);
-
+  
       if (response.ok) {
-        alert(result); // Başarılı kayıt
-        navigate("/interests"); // ✨ İLGİ ALANLARI SAYFASINA GÖNDER
+        alert("✅ Kayıt başarılı! Lütfen e-posta adresinizi doğrulamak için mail kutunuzu kontrol edin.");
+        navigate("/verify-info"); // ✅ Yeni bir bilgilendirme ekranına gönder      
       } else {
-        alert("register unsuccesful: " + result); // Kayıt hatası
+        // Backend'ten gelen spesifik hata mesajına göre uyarı ver
+        if (result.includes("zaten bir kullanıcı var")) {
+          alert("⚠️ Bu e-posta zaten kayıtlı. Lütfen giriş yapın.");
+        } else if (result.includes("zorunludur")) {
+          alert("⚠️ E-posta ve şifre zorunludur.");
+        } else {
+          alert("❌ Kayıt başarısız: " + result);
+        }
       }
     } catch (error) {
       console.error("Kayıt hatası:", error);
-      alert("Sunucu hatası!"); // Sunucu hatası
+      alert("❌ Sunucu hatası! Lütfen daha sonra tekrar deneyin.");
     }
   };
+  
 
   return (
     <div className="container">

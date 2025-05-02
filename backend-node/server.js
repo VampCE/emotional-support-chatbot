@@ -8,6 +8,8 @@ const chatRoutes = require("./routes/chat");
 const interestsRoutes = require('./routes/interests');
 const app = express();
 
+require('dotenv').config();
+
 // Middleware
 app.use(cors());
 app.use(express.json());

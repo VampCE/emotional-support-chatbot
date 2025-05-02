@@ -83,3 +83,19 @@ export const submitInterests = async (email, selectedInterests) => {
     throw error;
   }
 };
+export const sendPasswordResetEmail = async (email) => {
+  const response = await fetch(`${API_URL}/forgot-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const result = await response.text();
+  if (!response.ok) throw new Error(result);
+  return result;
+};
+export const fetchUserInterests = async (email) => {
+  const response = await fetch(`http://localhost:5001/api/interests/${email}`);
+  const result = await response.json();
+  return result;
+};
